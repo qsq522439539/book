@@ -9,7 +9,6 @@ test5_db_info = {"host": "zkt-hb02-test5.mysql.rds.aliyuncs.com",
                  "user": "zkt_test", "password": "zkt_test2016"}
 
 
-
 def execute_db(sql, dict=0, database="zkt"):
     conn = pymysql.connect(**test5_db_info, database=database, port=3306)
     cursor = pymysql.cursors.DictCursor if dict else pymysql.cursors.Cursor
@@ -20,6 +19,7 @@ def execute_db(sql, dict=0, database="zkt"):
     conn.close()
     return data
 
+
 class ConnRedis(object):
 
     def  __init__(self, key, db=153):
@@ -27,8 +27,8 @@ class ConnRedis(object):
         self.port = 6379
         self.password = 'zkt0613Zkt'
         self.key = key
-        self.db =db
-        self.conn = redis.Redis(host=self.host, port=self.port,password=self.password, db=self.db)
+        self.db = db
+        self.conn = redis.Redis(host=self.host, port=self.port, password=self.password, db=self.db)
 
     def get(self):
         return self.conn.get(self.key)

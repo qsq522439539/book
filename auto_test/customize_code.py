@@ -5,6 +5,7 @@ from connect import *
 
 CUSTOMIZE_CARD_REDIS_KEY_PREFIX = 'ticket-api:customize_card'
 
+
 class CustomizeCode(object):
 
     def __init__(self, hotel_id, product_id):
@@ -31,6 +32,7 @@ class CustomizeCode(object):
 
     def delete(self):
         self.redis.delete()
+
 
 if __name__ == '__main__':
     customize_code = CustomizeCode(184569, 242466)
