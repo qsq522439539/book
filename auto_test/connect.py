@@ -22,12 +22,13 @@ def execute_db(sql, dict=0, database="zkt"):
 
 class ConnRedis(object):
 
-    def  __init__(self, key):
+    def  __init__(self, key, db=153):
         self.host = 'zkt-hb02-dev-out.redis.rds.aliyuncs.com'
         self.port = 6379
         self.password = 'zkt0613Zkt'
         self.key = key
-        self.conn = redis.Redis(host=self.host, port=self.port,password=self.password, db=153)
+        self.db =db
+        self.conn = redis.Redis(host=self.host, port=self.port,password=self.password, db=self.db)
 
     def get(self):
         return self.conn.get(self.key)
