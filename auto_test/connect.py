@@ -22,20 +22,19 @@ def execute_db(sql, dict=0, database="zkt"):
 
 class ConnRedis(object):
 
-    def  __init__(self, key, value=None):
+    def  __init__(self, key):
         self.host = 'zkt-hb02-dev-out.redis.rds.aliyuncs.com'
         self.port = 6379
         self.password = 'zkt0613Zkt'
         self.key = key
-        self.value = value
         self.conn = redis.Redis(host=self.host, port=self.port,password=self.password, db=153)
 
     def get(self):
         return self.conn.get(self.key)
         # return self.conn.keys()
 
-    def set(self):
-        self.conn.set(self.key, self.value)
+    def set(self, value):
+        self.conn.set(self.key, value)
 
     def delete(self):
         self.conn.delete(self.key)

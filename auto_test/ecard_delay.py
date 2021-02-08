@@ -37,7 +37,6 @@ class TestEcard(object):
         preViewKey = res['data']['preViewKey']
         return preViewKey
 
-
     def test_operate(self, preViewKey):
         headers = {"accesstoken":"3b24dfc2-4fb5-4ca6-9076-2b2e158bcef7", "Content-Type":"application/json", "accept":"*/*"}
         operate_url = "http://test5-bg-api-gateway.zhiketong.net/ticket-api/eb/equity_delay/operate_delay?hotelId=184569"
