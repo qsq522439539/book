@@ -3,6 +3,7 @@
 
 import redis
 import pymysql
+from warnings import filterwarnings
 
 
 test5_db_info = {"host": "zkt-hb02-test5.mysql.rds.aliyuncs.com",
@@ -10,6 +11,7 @@ test5_db_info = {"host": "zkt-hb02-test5.mysql.rds.aliyuncs.com",
 
 
 def execute_db(sql, dict=0, database="zkt"):
+    filterwarnings("ignore",category=pymysql.Warning)
     conn = pymysql.connect(**test5_db_info, database=database, port=3306)
     cursor = pymysql.cursors.DictCursor if dict else pymysql.cursors.Cursor
     cursor = conn.cursor(cursor=cursor)
