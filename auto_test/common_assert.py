@@ -9,9 +9,10 @@ class CommonAssert(object):
 
     def __init__(self, platform_order_id):
         self.platform_order_id = platform_order_id
+        self.env = 1
 
     def get_res(self, sql):
-        res = execute_db(sql, 1)
+        res = execute_db(sql, 1, test_env=self.env)
         for n,value in enumerate(res):
             for k, v in value.items():
                 print("{}: {}".format(k, v))
@@ -30,7 +31,7 @@ class CommonAssert(object):
 
     def get_order_no(self):
         sql = "select sale_order_no,relevance_order_no from zkt_order_center.sale_order where platform_order_id={}".format(self.platform_order_id)
-        res = execute_db(sql, 1)
+        res = execute_db(sql, 1, test_env=self.env)
         res = res[0] if res else False
         return res
 
@@ -51,11 +52,18 @@ class CommonAssert(object):
         if not self.get_order_no():
             return
         relevance_order_no = self.get_order_no()['relevance_order_no']
-        sql = "select a.sale_order_no,a.member_id,a.member_level,a.member_level_name,a.status,a.platform_order_id," \
-              "a.total_price,a.total_pay_price,a.order_way,a.assign_member_level_id,a.assign_member_level_source,a.relevance_order_no,a.prepay_consume_model,a.post_ship_type," \
-              "b.product_id,b.product_type,b.total_price,b.total_paid_price,b.refund_quantity,b.refund_price,b.no_discount_amount " \
-              "from zkt_order_center.sale_order a inner join zkt_order_center.sale_order_detail b on a.sale_order_no = b.sale_order_no " \
-              "where a.relevance_order_no={} or a.sale_order_no={}".format(relevance_order_no, relevance_order_no)
+        if relevance_order_no:
+            sql = "select a.sale_order_no,a.member_id,a.member_level,a.member_level_name,a.status,a.platform_order_id," \
+                  "a.total_price,a.total_pay_price,a.order_way,a.assign_member_level_id,a.assign_member_level_source,a.relevance_order_no,a.prepay_consume_model,a.post_ship_type," \
+                  "b.product_id,b.product_type,b.total_price,b.total_paid_price,b.refund_quantity,b.refund_price,b.no_discount_amount " \
+                  "from zkt_order_center.sale_order a inner join zkt_order_center.sale_order_detail b on a.sale_order_no = b.sale_order_no " \
+                  "where a.relevance_order_no={} or a.sale_order_no={}".format(relevance_order_no, relevance_order_no)
+        else:
+            sql = "select a.sale_order_no,a.member_id,a.member_level,a.member_level_name,a.status,a.platform_order_id," \
+                  "a.total_price,a.total_pay_price,a.order_way,a.assign_member_level_id,a.assign_member_level_source,a.relevance_order_no,a.prepay_consume_model,a.post_ship_type," \
+                  "b.product_id,b.product_type,b.total_price,b.total_paid_price,b.refund_quantity,b.refund_price,b.no_discount_amount " \
+                  "from zkt_order_center.sale_order a inner join zkt_order_center.sale_order_detail b on a.sale_order_no = b.sale_order_no " \
+                  "where a.platform_order_id={}".format(self.platform_order_id)
         print("sale_order、sale_order_detail表数据".center(100, '*'))
         self.get_res(sql)
 
@@ -92,4 +100,4 @@ class CommonAssert(object):
         self.get_sale_post()
 
 if __name__ == '__main__':
-    CommonAssert('1322860526').main()
+    CommonAssert('1322860624').main()

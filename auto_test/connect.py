@@ -8,11 +8,13 @@ from warnings import filterwarnings
 
 test5_db_info = {"host": "zkt-hb02-test5.mysql.rds.aliyuncs.com",
                  "user": "zkt_test", "password": "zkt_test2016"}
+release_db_info = {"host": "zkt-hd01-f-pro-mdb-s-rds-01.zhiketong.cn",
+                 "user": "wangyu", "password": "nNfxHbx4Ha"}
 
-
-def execute_db(sql, dict=0, database="zkt"):
+def execute_db(sql, dict=0, database="zkt", test_env=1):
     filterwarnings("ignore",category=pymysql.Warning)
-    conn = pymysql.connect(**test5_db_info, database=database, port=3306)
+    db = test5_db_info if test_env else release_db_info
+    conn = pymysql.connect(**db, database=database, port=3306)
     cursor = pymysql.cursors.DictCursor if dict else pymysql.cursors.Cursor
     cursor = conn.cursor(cursor=cursor)
     cursor.execute(sql, )
