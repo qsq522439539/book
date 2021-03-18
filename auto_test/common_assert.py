@@ -92,6 +92,11 @@ class CommonAssert(object):
         print("settlement_log表数据".center(100, '*'))
         self.get_res(sql)
 
+    def get_post_settlement_log(self):
+        sql = "select * from zkt.postage_settlement_log where order_id in (select ticket_order_id from zkt.ticket_order where platform_order_id={})".format(self.platform_order_id)
+        print("post_settlement_log表数据".center(100, '*'))
+        self.get_res(sql)
+
     def get_post(self):
         sql = "SELECT c.mailing_information_id,b.ticket_order_id,a.associate_id,a.product_name,b.ticket_name,a.third_code,a.insured_amount," \
               "c.comment,c.post_number,b.status,b.ticket_order_id,c.sender_mobile,c.sender_name,c.send_address,c.service_provider," \
@@ -108,6 +113,7 @@ class CommonAssert(object):
         self.get_ticket_order()
         self.get_ticket_coupon()
         self.get_ticket_settlement_log()
+        self.get_post_settlement_log()
         self.get_post()
         self.get_ticket_post()
         self.get_sale_post()
