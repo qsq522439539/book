@@ -51,7 +51,7 @@ class CommonAssert(object):
         sql = "select a.amount,b.* from zkt.ticket_order_charge_details a  inner join zkt.ticket_order_post b " \
               "on a.ticket_order_id=b.ticket_order_id " \
               "where a.ticket_order_id in (select ticket_order_id from ticket_order where platform_order_id={})".format(self.platform_order_id)
-        print("get_ticket_post、ticket_order_charge_details表数据".center(100, '*'))
+        print("ticket_post、ticket_order_charge_details表数据".center(100, '*'))
         self.get_res(sql)
 
     def get_sale_order(self):
@@ -119,4 +119,4 @@ class CommonAssert(object):
         self.get_sale_post()
 
 if __name__ == '__main__':
-    CommonAssert('1322860969').main()
+    CommonAssert('1322861257').main()
